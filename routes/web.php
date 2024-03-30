@@ -132,5 +132,3 @@ Route::group(['prefix' => "admin",'middleware' => "login_auth"],function(){
 Route::post('admin/logout',[AdminAuthController::class,"logout"]);
 Route::post("/logout",[AuthController::class,"logout"])->name("auth#logout");
 
-Route::get('hello', function () {
-    return 'heloo';});
