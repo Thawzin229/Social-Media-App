@@ -21,7 +21,7 @@ class UserController extends Controller
     public function homePage()
     {
         $search = request("search");
-        $posts = Post::select('posts.*','users.name as user_name',"users.image as user_image")
+        $posts = Post::select('posts.*','users.name as user_name',"users.image as user_image",DB::raw("DATE_FORMAT(posts.created_at,'%M %e , %Y') as date"))
         ->join('users','posts.user_id','users.id')
         ->orderBy('posts.created_at',"desc")
         ->paginate();
