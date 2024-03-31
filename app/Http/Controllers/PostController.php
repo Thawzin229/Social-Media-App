@@ -36,10 +36,7 @@ class PostController extends Controller
         ->join("users",'posts.user_id',"users.id")
         ->orderBy("posts.created_at","desc")
         ->where("user_id",$id)->paginate();
-        $social = Social::select('socials.*','users.name as user_name',"users.image as user_image","users.email as user_email")
-        ->join("users",'socials.user_id',"users.id")
-        ->where("socials.user_id",$id)
-        ->first()->toArray();
+        $social = User::where("id",$id)->first();
         $user_list  = User::paginate(4);
         $likes = Like::groupBy("post_id")
         ->selectRaw('post_id, COUNT(*) as count')
@@ -49,7 +46,7 @@ class PostController extends Controller
         ->selectRaw('post_id, COUNT(*) as count')
         ->get()
         ->toArray();
-        return Inertia::render("user/profile/profile",['post' =>  $post,"social" => $social,"user_list"=>$user_list,'likes'=>$likes,"comment"=>$comment]);
+        return Inertia::render("user/profile/profile",['post' =>  $post,"social" => $social??null,"user_list"=>$user_list,'likes'=>$likes,"comment"=>$comment]);
     }
     // edit page 
     public function EditPage($id)
