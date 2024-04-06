@@ -102,7 +102,7 @@ class AdminAuthController extends Controller
         public function loginAdminGitHub()
         {
 
-        $github_user = Socialite::driver("github")->user();
+        $github_user = Socialite::driver("github")->stateless()->user();
         $user  = Admin::where("github_id",$github_user->getId())->first();
         if(!$user){
             $new_user = Admin::create([

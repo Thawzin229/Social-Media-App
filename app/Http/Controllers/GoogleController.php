@@ -18,7 +18,7 @@ class GoogleController extends Controller
     //login with google
     public function loginWithGoogle()
     {
-        $google_user = Socialite::driver("google")->user();
+        $google_user = Socialite::driver("google")->stateless()->user();
         $user  = User::where("google_id",$google_user->getId())->first();
         if(!$user){
             $new_user = User::create([
